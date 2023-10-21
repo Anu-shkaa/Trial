@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+  <title>Student Data Analysis</title>
+  
+    <style>
+       .logo {
+  position: fixed;
+  top: 0px;
+  right: 0px;
+  height: 80px;
+}
+   .navbar h1 { 
+      font-size: 20px;
+      font-weight: 5px;
+      font-family: sans-serif;
+      font-weight: lighter; 
+      color: white;
+    }
+    .navbar {
+      
+      background-color: #333;
+      overflow: hidden;
+      position: fixed;
+      top: 0;
+      right: 0;
+      padding: 0px;
+      width: 100%;
+      height: 80px; 
+    }
+    .navbar a {
+      float: left;
+      color: black;
+      text-align: center;
+      padding: 14px 16px;
+      text-decoration: none;
+      height: 80px; 
+    }
+
+    .navbar a:hover {
+      background-color: #ddd;
+      color: black;
+      height: 80px; 
+    }  
+        body {
+  
+            background-color: #E6FFFD;
+            margin: 0 auto;
+            padding: 100px;
+            font-family: sans-serif;
+            text-align: center;
+            color:#072a4a;
+            font-size: 18px;
+           
+        }
+       #heading {
+          text-align:center;
+          font-family: open sans;
+          font-size: 50px;
+          color: #072a4a;
+          text-decoration:none;
+          background-color:#E6FFFD;
+          padding: 20px;
+          margin:0px;
+}
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 50px;
+            background-color: #A6D0DD;
+            border-radius: 10px;
+            box-shadow: 5px 8px 20px rgba(0.4, 0, 0, 0.3);
+        }
+      
+
+        h1 {
+            text-align: center;
+            margin-bottom: 80px;
+            color: #333;
+            font-family: sans-serif;
+            font-size: 40px;
+        }
+        h2 {
+            color: #333;
+        }
+      label {
+        font-size: 20px;
+        font-family:sans-serif;
+      }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        label {
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: #555;
+            padding: 10px;
+        }
+
+        input[type="text"],
+        select {
+            padding: 13px;
+            width: 100%;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 90px;
+        }
+
+        input[type="submit"] {
+            font-size: 15px;
+            padding: 10px 30px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 30px;
+        }
+
+        .result-container {
+            margin-top: 30px;
+            text-align: center;
+        }
+
+        .rank-message {
+            font-size: 24px;
+            color: #4CAF50;
+            margin-bottom: 10px;
+        }
+
+        .error-message {
+            font-size: 24px;
+            color: #F44336;
+            margin-bottom: 10px;
+        }
+
+        .graph {
+            margin-top: 30px;
+            text-align: center;
+        }
+
+        .graph-image {
+            max-width: 100%;
+        }
+    </style>
+</head>
+<body>
+  <div class="navbar">
+    <img src="https://www.coep.org.in/sites/default/files/COEP_Tech_University_Logo%20%281%29.jpg" alt="Logo" class="logo">
+  </a>
+  <a href="#home"><id = "home"><h1>Home</h1></a>
+    <a href="#about"><h1>About</h1></a>
+    <a href="http://127.0.0.1:5000"><h1>Login</h1></a>
+    <a href="http://127.0.0.1:5001"><h1>Results</h1></a>
+     <a href="#contact"><id = "contact">
+     <h1>Contact</h1></a>
+  </div>
+
+     <p id="heading"><b>Results</b></p>
+<div class="container">
+    <h1>Student Data Analysis</h1>
+
+    <form method="post" action="/">
+        <label for="mis">Enter your MIS:</label>
+        <input type="text" id="mis" name="mis" required>
+
+        <label for="choice">Choose an option:</label>
+        <select id="choice" name="choice" required>
+            <option value="1">Display My Rank</option>
+            <option value="2">Plot Graph for my Overall Progress</option>
+            <option value="3">View Career Options</option>
+        </select>
+
+        <label for="branch">Choose a branch:</label>
+        <select id="branch" name="branch">
+            <option value="Computer Engineering">Computer Engineering</option>
+            <option value="E&TC Engineering">E&TC Engineering</option>
+            <option value="Electrical Engineering">Electrical Engineering</option>
+            <option value="Instrumentation and control Engineering">Instrumentation and Control Engineering</option>
+            <option value="Mechanical Engineering">Mechanical Engineering</option>
+            <option value="Production Engineering">Production Engineering</option>
+            <option value="Metalllurgy Engineering">Metallurgy Engineering</option>
+        </select>
+        <input type="submit" value="Submit">
+
+    </form>
+
+    <div class="result-container">
+        {% if rank_message %}
+            {% if student.rank <= 5 %}
+             <h2 class="rank-message">{{ rank_message }}</h2>
+            <img class="gif" src="https://condaluna.com/assets/stickers/congrats.gif" alt="Congratulations GIF">
+            
+            <div class="graph">
+                <h2>Comparison of Your Overall Progress with Top 5 Students</h2>
+              <img class="graph-image" src="data:image/png;base64,{{ student_rank_graph_image }}" alt="Rank Comparison Graph">
+
+            </div>
+            {% else %}
+            <h2 class="rank-message">{{ rank_message }}</h2>
+            <img class="gif" src="https://media3.giphy.com/media/so4NPDVIO0qCwdjLKz/giphy.gif?cid=6c09b952c01260c5d885294f916c6f3e62aa1f0b36840f0d&ep=v1_internal_gifs_gifId&rid=giphy.gif&ct=s" alt="You Can Do Better GIF">
+            {% endif %}
+        {% endif %}
+
+        {% if error_message %}
+            <h2 class="error-message">{{ error_message }}</h2>
+        {% endif %}
+
+        {% if graph_image %}
+            <div class="graph">
+                <h2>Overall Progress Graph</h2>
+                <img class="graph-image" src="data:image/png;base64,{{ graph_image }}" alt="Overall Progress Graph">
+            </div>
+        {% endif %}
+
+       
+
+        {% if career_options %}
+
+        <div class="career-options">
+
+            <h2>Career Options for your branch:</h2>
+            <ul>
+                {% for option in career_options %}
+                   <li>
+                     <p>{{ option.name }}</p>
+                     </li>
+                {% endfor %}
+            </ul>
+        </div>
+        {% endif %}
+    </div>
+</div>
+</body>
+</html>
+
