@@ -136,21 +136,11 @@ def menu():
                     labels = ["Attendance", "Extracurricular Marks", "Academic Marks"]
                     values = [attendance, extracurricular_marks, academic_marks]
 
-                        # Create a figure and axes
+                    # Create a figure and axes
                     fig, ax = plt.subplots()
 
                     # Plot the bar chart
-                    bars = ax.bar(student_labels, student_scores)
-
-                    # Add numeric values on top of the bars
-                    for bar, score in zip(bars, student_scores):
-                        ax.text(
-                            bar.get_x() + bar.get_width() / 2,  # X-coordinate for text
-                            bar.get_height(),  # Y-coordinate for text
-                            f"{score:.2f}",  # Format the score with two decimal places
-                            ha='center',  # Horizontal alignment
-                            va='bottom'  # Vertical alignment
-                        )
+                    ax.bar(labels, values)
 
                     # Set labels and title
                     ax.set_xlabel("Category")
@@ -175,7 +165,7 @@ def menu():
         elif choice == "3":
             branch = request.form['branch']
 
-            # Get career options based on the selected branch
+            
             if branch == "Computer Engineering":
                 career_options = [
                     {"name": "Software Developer"},
